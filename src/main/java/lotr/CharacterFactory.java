@@ -26,7 +26,6 @@ public class CharacterFactory {
         int rand = new Random().nextInt(subTypes.size() - 1);
         int i = 0;
 
-
         for (Class<?> obj : subTypes) {
             if (i == rand) {
                 ret_val = (Character) obj.getDeclaredConstructors()[0].newInstance();
