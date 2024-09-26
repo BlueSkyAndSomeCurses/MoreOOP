@@ -1,11 +1,17 @@
 package lotr;
 
+import lombok.SneakyThrows;
+
 import java.lang.reflect.InvocationTargetException;
 
 public class Main {
-    public static void main(String[] args) throws InvocationTargetException, InstantiationException, IllegalAccessException {
+
+    @SneakyThrows
+    public static void main(String[] args) {
         CharacterFactory characterFactory = new CharacterFactory();
         Character test = characterFactory.createCharacter();
-        System.out.println(test);
+        Character test2 = characterFactory.createCharacter();
+        GameManager gameManager = new GameManager();
+        gameManager.fight(test, test2);
     }
 }

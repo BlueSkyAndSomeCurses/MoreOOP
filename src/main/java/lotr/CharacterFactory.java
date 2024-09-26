@@ -11,7 +11,7 @@ import java.util.Set;
 import static org.reflections.scanners.Scanners.SubTypes;
 
 public class CharacterFactory {
-    Character createCharacter() throws InstantiationException, IllegalAccessException, IllegalArgumentException, java.lang.reflect.InvocationTargetException {
+    Character createCharacter() throws InstantiationException, IllegalAccessException, IllegalArgumentException, java.lang.reflect.InvocationTargetException, NoSuchMethodException {
 
         // typical usage: scan package with the default scanners SubTypes, TypesAnnotated
         Reflections reflections = new Reflections(
@@ -19,16 +19,15 @@ public class CharacterFactory {
                         .forPackage("lotr")
                         .filterInputsBy(new FilterBuilder().includePackage("lotr")));
 
-        Set<Class<?>> subTypes =
-                reflections.get(SubTypes.of(Character.class).asClass());
+        Set<Class<? extends Character>> subTypes = reflections.getSubTypesOf(Character.class);
 
         Character ret_val = null;
         int rand = new Random().nextInt(subTypes.size() - 1);
         int i = 0;
 
-        for (Class<?> obj : subTypes) {
+        for (Class<? extends Character> obj : subTypes) {
             if (i == rand) {
-                ret_val = (Character) obj.getDeclaredConstructors()[0].newInstance();
+                ret_val = obj.getDeclaredConstructor().newInstance();
                 break;
             }
             ++i;
